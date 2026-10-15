@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' file: data: blob:; media-src 'self' file: data: blob:; style-src 'self' 'unsafe-inline'">
+  <link rel="stylesheet" href="blink.css">
+  <style>
+    html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; user-select: none; }
+    body { display: flex; align-items: center; justify-content: center; font-family: "Segoe UI", system-ui, sans-serif; }
+    #wrap {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      padding: 12px; border-radius: 28px;
+      opacity: 0; transform: scale(.85) translateY(10px);
+      transition: opacity 250ms ease, transform 250ms cubic-bezier(.3,1.5,.6,1);
+    }
+    #wrap.card { background: rgba(255, 255, 255, .92); box-shadow: 0 6px 24px rgba(0, 0, 0, .25); }
+    #wrap.show { opacity: 1; transform: none; }
+    #stage { display: flex; align-items: center; justify-content: center; }
+    #stage img, #stage video, #stage canvas { max-width: 100%; max-height: 100%; object-fit: contain; }
+    #caption { font-size: 15px; font-weight: 600; color: #444; letter-spacing: .5px; }
+    #wrap:not(.card) #caption { color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.8); }
+  </style>
+</head>
+<body>
+  <div id="wrap"><div id="stage"></div><div id="caption"></div></div>
+  <script src="shared.js"></script>
+  <script src="../node_modules/lottie-web/build/player/lottie_light.min.js"></script>
+  <script src="overlay.js"></script>
+</body>
+</html>

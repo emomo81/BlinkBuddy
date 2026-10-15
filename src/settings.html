@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' file: data:; media-src 'self' file: data:; style-src 'self' 'unsafe-inline'">
+  <title>BlinkBuddy Settings</title>
+  <link rel="stylesheet" href="blink.css">
+  <style>
+    :root {
+      --bg: #f6f4ef; --panel: #fff; --text: #22211f; --muted: #6d6a64; --line: #e4e0d8;
+      --accent: #2f7d5b; --accent-ink: #fff;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #1b1c1e; --panel: #25272a; --text: #ecebe8; --muted: #a09d97; --line: #36383c; --accent: #4fb489; --accent-ink: #0d1f17; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.45 "Segoe UI", system-ui, sans-serif; }
+    header { display: flex; align-items: center; gap: 18px; padding: 20px 22px 8px; }
+    #preview { width: 96px; height: 96px; flex: none; border-radius: 22px; background: var(--panel); border: 1px solid var(--line); padding: 8px; display: flex; align-items: center; justify-content: center; }
+    #preview img, #preview video { max-width: 100%; max-height: 100%; }
+    #preview .note { font-size: 11px; color: var(--muted); text-align: center; }
+    h1 { font-size: 20px; margin: 0 0 2px; }
+    header p { margin: 0; color: var(--muted); }
+    main { padding: 8px 22px 22px; }
+    section { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 4px 16px; margin-top: 14px; }
+    h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 18px 0 0 4px; }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+    .row:last-child { border-bottom: 0; }
+    .row label { flex: 1; }
+    .row small { display: block; color: var(--muted); font-size: 12px; }
+    select, input[type=text], input[type=number] {
+      font: inherit; color: var(--text); background: var(--bg); border: 1px solid var(--line);
+      border-radius: 8px; padding: 6px 8px; min-width: 170px;
+    }
+    input[type=number] { min-width: 0; width: 80px; }
+    input[type=range] { width: 170px; accent-color: var(--accent); }
+    input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--accent); }
+    .buttons { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 0; }
+    button {
+      font: inherit; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--line);
+      background: var(--bg); color: var(--text); cursor: pointer;
+    }
+    button:hover { border-color: var(--muted); }
+    button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+    .tip { color: var(--muted); font-size: 12px; margin: 12px 4px 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <div id="preview"></div>
+    <div>
+      <h1>BlinkBuddy</h1>
+      <p>A little friend in the corner of your screen that blinks, so you remember to blink too.</p>
+    </div>
+  </header>
+  <main>
+    <div class="buttons">
+      <button class="primary" id="test">Test blink now</button>
+    </div>
+
+    <h2>Reminders</h2>
+    <section>
+      <div class="row"><label for="enabled">Blink reminders on</label><input type="checkbox" id="enabled"></div>
+      <div class="row"><label for="intervalSec">Remind me every (seconds)<small>Most people blink 15–20 times a minute, but only about 5 times at a screen. Try 10–30 seconds.</small></label><input type="number" id="intervalSec" min="3" max="3600"></div>
+      <div class="row"><label for="jitter">Vary the timing slightly<small>Keeps the reminder from fading into the background.</small></label><input type="checkbox" id="jitter"></div>
+      <div class="row"><label for="idlePauseSec">Pause when I'm away for (seconds)<small>0 = never pause</small></label><input type="number" id="idlePauseSec" min="0" max="3600"></div>
+      <div class="row"><label for="breakReminder">20-20-20 break reminder<small>Every 20 minutes: look 20 feet away for 20 seconds.</small></label><input type="checkbox" id="breakReminder"></div>
+      <div class="row"><label for="startAtLogin">Start when I sign in to Windows</label><input type="checkbox" id="startAtLogin"></div>
+    </section>
+
+    <h2>Look &amp; sound</h2>
+    <section>
+      <div class="row"><label for="animation">Animation</label><select id="animation"></select></div>
+      <div class="row"><label for="sound">Sound</label><select id="sound"></select></div>
+      <div class="row"><label for="volume">Volume</label><input type="range" id="volume" min="0" max="1" step="0.05"></div>
+      <div class="row"><label for="size">Size</label><input type="range" id="size" min="80" max="360" step="10"></div>
+      <div class="row"><label for="position">Position</label>
+        <select id="position">
+          <option value="bottom-right">Bottom right</option>
+          <option value="bottom-left">Bottom left</option>
+          <option value="top-right">Top right</option>
+          <option value="top-left">Top left</option>
+          <option value="top-center">Top center</option>
+        </select>
+      </div>
+      <div class="row"><label for="showCard">White card behind the animation<small>Off = only the character shows.</small></label><input type="checkbox" id="showCard"></div>
+      <div class="row"><label for="removeWhiteBg">Remove white background from GIFs, images &amp; videos<small>Keeps white parts inside the character, like eye whites.</small></label><input type="checkbox" id="removeWhiteBg"></div>
+      <div class="row"><label for="caption">Caption<small>Leave empty for none.</small></label><input type="text" id="caption" maxlength="24"></div>
+    </section>
+
+    <h2>Library</h2>
+    <section>
+      <div class="buttons">
+        <button id="addAnim">Add animations…</button>
+        <button id="addSound">Add sounds…</button>
+        <button id="openLib">Open library folder</button>
+      </div>
+    </section>
+    <p class="tip">Supported: GIF, WebP, APNG, PNG, WebM, MP4, and Lottie (.json) animations; MP3, WAV, OGG, and M4A sounds. Videos (WebM/MP4) play their own sound; the sound chosen above only plays if the video is silent. Files you drop into the library folder show up here the next time you open this window.</p>
+  </main>
+  <script src="shared.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>
