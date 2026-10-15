@@ -4,6 +4,11 @@
   "version": "0.1.3",
   "description": "A tiny desktop companion that blinks at you so you remember to blink too.",
   "main": "src/main.js",
+  "author": "Emmanuel Momo",
+  "license": "MIT",
+  "homepage": "https://github.com/emomo81/BlinkBuddy#readme",
+  "repository": { "type": "git", "url": "https://github.com/emomo81/BlinkBuddy.git" },
+  "bugs": { "url": "https://github.com/emomo81/BlinkBuddy/issues" },
   "scripts": {
     "start": "electron .",
     "dist": "electron-builder --win nsis"
